@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Title } from "@/ui-components/Title";
 import Link from "next/link";
-import { Content } from "./components/content";
+import { Content } from "../../../components/ui/content";
 
 export default function EscolherRacaPage() {
   return (
@@ -102,7 +102,7 @@ export default function EscolherRacaPage() {
           Cancelar
         </Link>
         <Link
-          href="escolher-raca"
+          href="escolher-classe"
           className="bg-linear-to-t from-slate-800 to-slate-700 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
         >
           Avançar
