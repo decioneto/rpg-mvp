@@ -125,7 +125,7 @@ export default function EscolherClassePage() {
           Cancelar
         </Link>
         <Link
-          href="escolher-raca"
+          href="revisar"
           className="bg-linear-to-t from-slate-800 to-slate-700 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
         >
           Avançar
