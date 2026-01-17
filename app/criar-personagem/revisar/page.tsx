@@ -111,7 +111,7 @@ export default function RevisarPage() {
           Cancelar
         </Link>
         <Link
-          href="revisar"
+          href="/game-canva"
           className="bg-linear-to-t from-slate-800 to-slate-700 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
         >
           Iniciar jogo
