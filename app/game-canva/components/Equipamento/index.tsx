@@ -41,7 +41,7 @@ const PLACEHOLDERS = [
 
 export function Equipamento() {
   return (
-    <div className="bg-slate-900 border border-slate-800 h-full min-h-95 flex flex-col gap-2">
+    <div className="bg-slate-900 border border-slate-800 h-full min-h-95 flex flex-col gap-2 rounded">
       <div className="flex-1 h-full grid grid-cols-3 grid-rows-4 gap-3 p-4">
         <div className="aspect-square invisible" />
         <div className="col-start-2 aspect-square bg-slate-950 flex items-center justify-center rounded">

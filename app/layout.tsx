@@ -3,7 +3,7 @@ import "./globals.css";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["200", "400", "700"],
+  weight: ["200", "400", "700", "900"],
 });
 
 export default function RootLayout({

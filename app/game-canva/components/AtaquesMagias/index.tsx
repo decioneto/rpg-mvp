@@ -1,6 +1,6 @@
 export function AtaquesMagias() {
   return (
-    <div className="bg-slate-900 border border-slate-800 h-full flex flex-col gap-2 p-4 g">
+    <div className="bg-slate-900 border border-slate-800 h-full flex flex-col gap-2 p-4 rounded">
       <p className="m-0 text-xs text-slate-500 font-bold uppercase">
         Ataques e magias
       </p>
