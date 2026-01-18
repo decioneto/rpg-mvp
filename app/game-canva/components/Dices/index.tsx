@@ -1,0 +1,61 @@
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+
+const DICES = [
+  {
+    key: "d4",
+    image: "/mdi_dice-d4.svg",
+  },
+  {
+    key: "d6",
+    image: "/mdi_dice-d6.svg",
+  },
+  {
+    key: "d8",
+    image: "/mdi_dice-d8.svg",
+  },
+  {
+    key: "d10",
+    image: "/mdi_dice-d10.svg",
+  },
+  {
+    key: "d12",
+    image: "/mdi_dice-d12.svg",
+  },
+  {
+    key: "d20",
+    image: "/mdi_dice-d20.svg",
+  },
+];
+
+export function Dices() {
+  return (
+    <div className="flex flex-col h-full gap-4">
+      <div className="h-full border border-slate-800 flex-1 relative">
+        <div className="bg-black rounded h-full w-full pr-14"></div>
+        <div className="absolute top-2 right-2">
+          <div className="flex flex-col gap-2">
+            {DICES.map((item) => (
+              <button
+                className="w-10 h-10 rounded bg-slate-500 flex items-center justify-center gap-4 cursor-pointer"
+                key={item.key}
+              >
+                <Image src={item.image} width={32} height={32} alt="d4" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="h-50 flex flex-col gap-3">
+        <div className="flex-1 bg-slate-800 border border-slate-600 rounded"></div>
+        <div className="flex gap-3">
+          <input
+            placeholder="Digite sua ação"
+            className="px-2 h-10 w-full bg-slate-100 outline-none rounded text-slate-900"
+          />
+          <Button size="lg">Enviar</Button>
+        </div>
+      </div>
+    </div>
+  );
+}
