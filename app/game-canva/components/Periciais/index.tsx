@@ -123,8 +123,10 @@ export function Pericias() {
             <div className="border-b border-slate-600 text-xs w-4">
               {item.value === "0" ? "" : item.value}
             </div>
-            <div className="text-sm">{item.nome}</div>
-            <div className="text-xs text-slate-600">{`(${item.modifier})`}</div>
+            <div className="flex items-center gap-1">
+              <div className="text-sm">{item.nome}</div>
+              <div className="text-xs text-slate-500">{`(${item.modifier})`}</div>
+            </div>
             <div></div>
           </div>
         ))}
