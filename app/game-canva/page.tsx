@@ -1,5 +1,4 @@
 import { Atributes } from "./components/Atributos";
-import { FormularioJogador } from "./components/FormularioJogador";
 import { Dices } from "./components/Dices";
 import { Inventario } from "./components/Inventario";
 
@@ -10,7 +9,7 @@ export default function GameCanvaPage() {
         <Atributes />
         <div className="flex flex-1 h-full gap-4">
           <div className="flex flex-col w-full gap-4">
-            <FormularioJogador />
+            {/* <FormularioJogador /> */}
             <Dices />
           </div>
         </div>
