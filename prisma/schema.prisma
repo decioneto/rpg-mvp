@@ -64,3 +64,11 @@ model CharacterAttributes {
   @@unique([character_id, attribute_id])
   @@map("character_attributes")
 }
+
+model Skills {
+  id                String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String
+  related_attribute String
+
+  @@map("skills")
+}
