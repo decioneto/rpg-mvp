@@ -53,10 +53,10 @@ export default async function EscolherClassePage() {
       </div>
       <div className="flex-1 flex gap-10 items-start">
         <Link
-          href="/"
+          href="escolher-raca"
           className="bg-slate-950 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
         >
-          Cancelar
+          Voltar
         </Link>
         <Link
           href="revisar"
