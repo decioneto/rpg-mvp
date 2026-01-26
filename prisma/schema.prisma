@@ -24,12 +24,14 @@ model Characters {
 }
 
 model Classes {
-  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String       @unique @db.VarChar
-  hit_die     Int
-  description String
-  created_at  DateTime     @default(now()) @db.Timestamptz(6)
-  characters  Characters[]
+  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String       @unique @db.VarChar
+  hit_die         Int
+  description     String
+  base_attributes String
+  pericias        String
+  created_at      DateTime     @default(now()) @db.Timestamptz(6)
+  characters      Characters[]
 
   @@map("classes")
 }
