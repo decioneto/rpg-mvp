@@ -4,11 +4,17 @@ import { createContext, useContext, useMemo, useState } from "react";
 
 type PersonagemContextProps = {
   name: string;
+  setName: React.Dispatch<React.SetStateAction<string>>;
   race: string;
+  setRace: React.Dispatch<React.SetStateAction<string>>;
   classe: string;
+  setClasse: React.Dispatch<React.SetStateAction<string>>;
   level?: number;
+  setLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
   maxHp?: number;
+  setMaxHp: React.Dispatch<React.SetStateAction<number | undefined>>;
   currentHp?: number;
+  setCurrentHp: React.Dispatch<React.SetStateAction<number | undefined>>;
 };
 
 export const PersonagemContext = createContext({} as PersonagemContextProps);

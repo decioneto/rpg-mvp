@@ -11,6 +11,7 @@ export async function fetchAllRaces(): Promise<FetchAllRacesResponse> {
   try {
     const races = await fetchAllRacesRepository();
     const racesDto = races.map((item) => ({
+      id: item.id,
       name: item.name,
       description: item.description,
     }));

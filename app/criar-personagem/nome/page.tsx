@@ -1,7 +1,12 @@
+"use client";
+
+import { usePersonagemContext } from "@/context/PersonagemContext";
 import { Title } from "@/ui-components/Title";
 import Link from "next/link";
 
 export default function EscolherNomePage() {
+  const { name, setName } = usePersonagemContext();
+
   return (
     <>
       <div className="flex-4 flex items-center">
@@ -11,6 +16,8 @@ export default function EscolherNomePage() {
           <input
             placeholder="Escolha um nome para seu personagem"
             className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900 w-142.5"
+            onChange={(e) => setName(e.target.value)}
+            value={name}
           />
         </div>
       </div>
