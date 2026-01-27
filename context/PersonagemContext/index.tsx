@@ -12,7 +12,7 @@ type PersonagemContextProps = {
   classe: ClasseDTO | undefined;
   setClasse: React.Dispatch<React.SetStateAction<ClasseDTO | undefined>>;
   level?: number;
-  setLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setLevel: React.Dispatch<React.SetStateAction<number>>;
   maxHp?: number;
   setMaxHp: React.Dispatch<React.SetStateAction<number | undefined>>;
   currentHp?: number;
@@ -40,7 +40,7 @@ export function PersonagemContextProvider({
   const [name, setName] = useState("");
   const [race, setRace] = useState<RaceDTO | undefined>(undefined);
   const [classe, setClasse] = useState<ClasseDTO | undefined>(undefined);
-  const [level, setLevel] = useState<number | undefined>(undefined);
+  const [level, setLevel] = useState<number>(1);
   const [maxHp, setMaxHp] = useState<number | undefined>(undefined);
   const [currentHp, setCurrentHp] = useState<number | undefined>(undefined);
 

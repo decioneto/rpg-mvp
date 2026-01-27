@@ -1,40 +1,51 @@
+"use client";
+
+import { usePersonagemContext } from "@/context/PersonagemContext";
 import { Title } from "@/ui-components/Title";
 import Link from "next/link";
 
-const ATRIBUTOS = [
-  {
-    name: "Força",
-    value: "15",
-    modifier: "+1",
-  },
-  {
-    name: "Destreza",
-    value: "14",
-    modifier: "+1",
-  },
-  {
-    name: "Constituição",
-    value: "13",
-    modifier: "+1",
-  },
-  {
-    name: "Inteligência",
-    value: "12",
-    modifier: "+1",
-  },
-  {
-    name: "Sabedoria",
-    value: "10",
-    modifier: "+1",
-  },
-  {
-    name: "Carisma",
-    value: "8",
-    modifier: "+1",
-  },
-];
-
 export default function RevisarPage() {
+  const { name, race, classe, level, maxHp } = usePersonagemContext();
+
+  const ATRIBUTOS = [
+    {
+      name: "Força",
+      code: "FOR",
+      value: "15",
+      modifier: "0",
+    },
+    {
+      name: "Destreza",
+      code: "DES",
+      value: "14",
+      modifier: "0",
+    },
+    {
+      name: "Constituição",
+      code: "CON",
+      value: "13",
+      modifier: "0",
+    },
+    {
+      name: "Inteligência",
+      code: "INT",
+      value: "12",
+      modifier: "0",
+    },
+    {
+      name: "Sabedoria",
+      code: "SAB",
+      value: "10",
+      modifier: "0",
+    },
+    {
+      name: "Carisma",
+      code: "CAR",
+      value: "8",
+      modifier: "0",
+    },
+  ];
+
   return (
     <>
       <div className="flex-4 flex items-center">
@@ -42,8 +53,8 @@ export default function RevisarPage() {
           <Title text="Revise seu personagem" />
 
           <div className="flex flex-col w-200 gap-8">
-            <div className="flex-1">
-              <div className="flex flex-col gap-2">
+            <div className="flex-1 flex gap-4">
+              <div className="flex flex-col gap-2 w-full">
                 <label htmlFor="nome" className="text-yellow-500/80">
                   Nome
                 </label>
@@ -51,13 +62,25 @@ export default function RevisarPage() {
                   id="nome"
                   placeholder="Escolha um nome para seu personagem"
                   className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
-                  defaultValue="Bruenor"
+                  defaultValue={name}
+                  readOnly
+                />
+              </div>
+              <div className="flex flex-col gap-2 w-full min-w-10 max-w-20">
+                <label htmlFor="level" className="text-yellow-500/80">
+                  Level
+                </label>
+                <input
+                  id="level"
+                  placeholder="Escolha um nome para seu personagem"
+                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
+                  defaultValue={level}
                   readOnly
                 />
               </div>
             </div>
-            <div className="flex flex-1 gap-8">
-              <div className="flex flex-1 flex-col gap-2">
+            <div className="flex flex-1 gap-4">
+              <div className="flex flex-1 flex-col gap-2 w-full">
                 <label htmlFor="nome" className="text-yellow-500/80">
                   Raça
                 </label>
@@ -65,11 +88,11 @@ export default function RevisarPage() {
                   id="nome"
                   placeholder="Escolha um nome para seu personagem"
                   className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
-                  defaultValue="Anão"
+                  defaultValue={race?.name}
                   readOnly
                 />
               </div>
-              <div className="flex flex-1 flex-col gap-2">
+              <div className="flex flex-1 flex-col gap-2 w-full">
                 <label htmlFor="nome" className="text-yellow-500/80">
                   Classe
                 </label>
@@ -77,7 +100,18 @@ export default function RevisarPage() {
                   id="nome"
                   placeholder="Escolha um nome para seu personagem"
                   className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
-                  defaultValue="Guerreiro"
+                  defaultValue={classe?.name}
+                  readOnly
+                />
+              </div>
+              <div className="flex flex-1 flex-col gap-2 w-full min-w-10 max-w-20">
+                <label htmlFor="pv" className="text-yellow-500/80">
+                  PV
+                </label>
+                <input
+                  id="pv"
+                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
+                  defaultValue={maxHp}
                   readOnly
                 />
               </div>
@@ -93,10 +127,17 @@ export default function RevisarPage() {
                   {item.name}
                 </div>
                 <div className="text-slate-100 font-bold text-[52px]">
-                  {item.value}
+                  {Number(item.value) +
+                    (race?.racesModifier?.find(
+                      (modifier) => modifier.attribute === item.code,
+                    )?.value ?? 0)}
                 </div>
-                <div className="text-xs font-bold text-slate-900 slate-900 py-1 px-2 bg-slate-100 rounded-[2px] absolute bottom-0 left-1/2 transform translate-y-1/2 -translate-x-1/2">
-                  {item.modifier}
+                <div className="text-xs font-bold text-slate-900 py-1 px-2 bg-slate-100 rounded-[2px] absolute bottom-0 left-1/2 transform translate-y-1/2 -translate-x-1/2">
+                  {`+${
+                    race?.racesModifier?.find(
+                      (modifier) => modifier.attribute === item.code,
+                    )?.value ?? "0"
+                  }`}
                 </div>
               </div>
             ))}
