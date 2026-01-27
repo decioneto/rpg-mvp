@@ -37,13 +37,24 @@ model Classes {
 }
 
 model Races {
-  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String       @unique @db.VarChar
-  description String
-  created_at  DateTime     @default(now()) @db.Timestamptz(6)
-  characters  Characters[]
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String          @unique @db.VarChar
+  description    String
+  created_at     DateTime        @default(now()) @db.Timestamptz(6)
+  characters     Characters[]
+  races_modifier RacesModifier[]
 
   @@map("races")
+}
+
+model RacesModifier {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  race_id   String @db.Uuid
+  race      Races  @relation(fields: [race_id], references: [id])
+  attribute String
+  value     Int
+
+  @@map("races_modifier")
 }
 
 model Attributes {
