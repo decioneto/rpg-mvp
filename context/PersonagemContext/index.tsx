@@ -1,14 +1,16 @@
 "use client";
 
+import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
+import { RaceDTO } from "@/backend/dtos/RaceDTO";
 import { createContext, useContext, useMemo, useState } from "react";
 
 type PersonagemContextProps = {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
-  race: string;
-  setRace: React.Dispatch<React.SetStateAction<string>>;
-  classe: string;
-  setClasse: React.Dispatch<React.SetStateAction<string>>;
+  race: RaceDTO | undefined;
+  setRace: React.Dispatch<React.SetStateAction<RaceDTO | undefined>>;
+  classe: ClasseDTO | undefined;
+  setClasse: React.Dispatch<React.SetStateAction<ClasseDTO | undefined>>;
   level?: number;
   setLevel: React.Dispatch<React.SetStateAction<number | undefined>>;
   maxHp?: number;
@@ -36,8 +38,8 @@ export function PersonagemContextProvider({
   children: React.ReactNode;
 }) {
   const [name, setName] = useState("");
-  const [race, setRace] = useState("");
-  const [classe, setClasse] = useState("");
+  const [race, setRace] = useState<RaceDTO | undefined>(undefined);
+  const [classe, setClasse] = useState<ClasseDTO | undefined>(undefined);
   const [level, setLevel] = useState<number | undefined>(undefined);
   const [maxHp, setMaxHp] = useState<number | undefined>(undefined);
   const [currentHp, setCurrentHp] = useState<number | undefined>(undefined);

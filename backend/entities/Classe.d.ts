@@ -1,4 +1,5 @@
 export type ClasseData = {
+  id: string;
   name: string;
   hit_die: number;
   description: string;

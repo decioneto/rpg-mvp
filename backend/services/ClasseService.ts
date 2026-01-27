@@ -11,6 +11,7 @@ export async function fetchAllClasses(): Promise<FetchAllRacesResponse> {
   try {
     const classes = await fetchAllClassesRepository();
     const classesDto: ClasseDTO[] = classes.map((item) => ({
+      id: item.id,
       name: item.name,
       hitDie: item.hit_die,
       description: item.description,

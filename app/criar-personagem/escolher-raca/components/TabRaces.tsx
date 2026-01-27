@@ -16,7 +16,7 @@ export function TabRaces({ races }: TabRacesProps) {
 
   useEffect(() => {
     if (races) {
-      setRace(races[0].id);
+      setRace(races[0]);
     }
   }, []);
 
@@ -28,7 +28,7 @@ export function TabRaces({ races }: TabRacesProps) {
             className="bg-slate-500 cursor-pointer uppercase px-10 h-13 font-bold text-slate-50 data-[state=active]:text-slate-950 data-[state=active]:bg-slate-50"
             value={item.id}
             key={item.id}
-            onClick={() => setRace(item.id)}
+            onClick={() => setRace(item)}
           >
             {item.name}
           </TabsTrigger>
