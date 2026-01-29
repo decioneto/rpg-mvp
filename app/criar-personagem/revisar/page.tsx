@@ -3,48 +3,14 @@
 import { usePersonagemContext } from "@/context/PersonagemContext";
 import { Title } from "@/ui-components/Title";
 import Link from "next/link";
+import { Attributes } from "./components/Attributes";
 
 export default function RevisarPage() {
   const { name, race, classe, level, maxHp } = usePersonagemContext();
 
-  const ATRIBUTOS = [
-    {
-      name: "Força",
-      code: "FOR",
-      value: "15",
-      modifier: "0",
-    },
-    {
-      name: "Destreza",
-      code: "DES",
-      value: "14",
-      modifier: "0",
-    },
-    {
-      name: "Constituição",
-      code: "CON",
-      value: "13",
-      modifier: "0",
-    },
-    {
-      name: "Inteligência",
-      code: "INT",
-      value: "12",
-      modifier: "0",
-    },
-    {
-      name: "Sabedoria",
-      code: "SAB",
-      value: "10",
-      modifier: "0",
-    },
-    {
-      name: "Carisma",
-      code: "CAR",
-      value: "8",
-      modifier: "0",
-    },
-  ];
+  if (!race || !classe) {
+    return <></>;
+  }
 
   return (
     <>
@@ -117,39 +83,15 @@ export default function RevisarPage() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-10">
-            {ATRIBUTOS.map((item) => (
-              <div
-                className="bg-slate-500 w-32.5 h-32.5 rounded relative flex flex-col items-center justify-center"
-                key={item.name}
-              >
-                <div className="text-xs font-bold text-slate-900 slate-900 py-1 px-2 bg-slate-100 rounded-[2px] absolute top-0 left-1/2 transform -translate-1/2">
-                  {item.name}
-                </div>
-                <div className="text-slate-100 font-bold text-[52px]">
-                  {Number(item.value) +
-                    (race?.racesModifier?.find(
-                      (modifier) => modifier.attribute === item.code,
-                    )?.value ?? 0)}
-                </div>
-                <div className="text-xs font-bold text-slate-900 py-1 px-2 bg-slate-100 rounded-[2px] absolute bottom-0 left-1/2 transform translate-y-1/2 -translate-x-1/2">
-                  {`+${
-                    race?.racesModifier?.find(
-                      (modifier) => modifier.attribute === item.code,
-                    )?.value ?? "0"
-                  }`}
-                </div>
-              </div>
-            ))}
-          </div>
+          <Attributes race={race} classe={classe} />
         </div>
       </div>
       <div className="flex-1 flex gap-10 items-start">
         <Link
-          href="escolher-classe"
+          href="nome"
           className="bg-slate-950 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
         >
-          Voltar
+          Editar
         </Link>
         <Link
           href="/game-canva"

@@ -4,5 +4,6 @@ export type ClasseDTO = {
   hitDie: number;
   description: string;
   baseAttributes: string;
+  baseAttributesCode: string[];
   pericias: string;
 };

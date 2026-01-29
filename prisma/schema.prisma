@@ -24,14 +24,15 @@ model Characters {
 }
 
 model Classes {
-  id              String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name            String       @unique @db.VarChar
-  hit_die         Int
-  description     String
-  base_attributes String
-  pericias        String
-  created_at      DateTime     @default(now()) @db.Timestamptz(6)
-  characters      Characters[]
+  id                   String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                 String       @unique @db.VarChar
+  hit_die              Int
+  description          String
+  base_attributes      String
+  base_attributes_code String[]
+  pericias             String
+  created_at           DateTime     @default(now()) @db.Timestamptz(6)
+  characters           Characters[]
 
   @@map("classes")
 }
@@ -74,6 +75,7 @@ model CharacterAttributes {
   attribute_id String     @db.Uuid
   attribute    Attributes @relation(fields: [attribute_id], references: [id], map: "fk_character_attributes_attribute")
   base_value   Int
+  modifier     Int
 
   @@unique([character_id, attribute_id])
   @@map("character_attributes")

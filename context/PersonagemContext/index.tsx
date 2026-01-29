@@ -17,6 +17,12 @@ type PersonagemContextProps = {
   setMaxHp: React.Dispatch<React.SetStateAction<number | undefined>>;
   currentHp?: number;
   setCurrentHp: React.Dispatch<React.SetStateAction<number | undefined>>;
+  baseAttributes: Array<{ attribute: string; value: number }> | undefined;
+  setBaseAttributes: React.Dispatch<
+    React.SetStateAction<
+      Array<{ attribute: string; value: number }> | undefined
+    >
+  >;
 };
 
 export const PersonagemContext = createContext({} as PersonagemContextProps);
@@ -43,6 +49,9 @@ export function PersonagemContextProvider({
   const [level, setLevel] = useState<number>(1);
   const [maxHp, setMaxHp] = useState<number | undefined>(undefined);
   const [currentHp, setCurrentHp] = useState<number | undefined>(undefined);
+  const [baseAttributes, setBaseAttributes] = useState<
+    Array<{ attribute: string; value: number }> | undefined
+  >(undefined);
 
   const values = useMemo<PersonagemContextProps>(
     () => ({
@@ -58,8 +67,10 @@ export function PersonagemContextProvider({
       setMaxHp,
       currentHp,
       setCurrentHp,
+      baseAttributes,
+      setBaseAttributes,
     }),
-    [name, race, classe, level, maxHp, currentHp],
+    [name, race, classe, level, maxHp, currentHp, baseAttributes],
   );
 
   return (

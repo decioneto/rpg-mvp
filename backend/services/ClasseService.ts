@@ -16,6 +16,7 @@ export async function fetchAllClasses(): Promise<FetchAllRacesResponse> {
       hitDie: item.hit_die,
       description: item.description,
       baseAttributes: item.base_attributes,
+      baseAttributesCode: item.base_attributes_code,
       pericias: item.pericias,
     }));
 

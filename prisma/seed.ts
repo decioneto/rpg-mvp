@@ -10,6 +10,7 @@ const classesData: Prisma.ClassesCreateInput[] = [
     pericias:
       "Arcanismo, Enganação, Intimidação, Intuição, Persuasão e Religião",
     base_attributes: "Carisma e Constituição",
+    base_attributes_code: ["CAR", "CON"],
   },
   {
     name: "Guerreiro",
@@ -19,6 +20,7 @@ const classesData: Prisma.ClassesCreateInput[] = [
     pericias:
       "Acrobacia, Adestrar, Animais, Atletismo, História, Intuição, Intimidação, Percepção, Sobrevivência",
     base_attributes: "Força e Constituição",
+    base_attributes_code: ["FOR", "CON"],
   },
   {
     name: "Ladino",
@@ -28,6 +30,7 @@ const classesData: Prisma.ClassesCreateInput[] = [
     pericias:
       "Acrobacia, Atletismo, Atuação, Enganação, Furtividade, Intimidação, Intuição, Investigação, Percepção, Persuasão, Prestidigitação",
     base_attributes: "Destreza e Inteligência",
+    base_attributes_code: ["DES", "INT"],
   },
 ];
 
@@ -121,12 +124,12 @@ Mecanicamente, os elfos possuem +2 em Destreza, o que os torna excelentes arquei
 ];
 
 export async function main() {
-  // for (const u of classesData) {
-  //   await prisma.classes.create({ data: u });
-  // }
-  for (const r of racesData) {
-    await prisma.races.create({ data: r });
+  for (const u of classesData) {
+    await prisma.classes.create({ data: u });
   }
+  // for (const r of racesData) {
+  //   await prisma.races.create({ data: r });
+  // }
   // for (const a of attributesData) {
   //   await prisma.attributes.create({ data: a });
   // }
