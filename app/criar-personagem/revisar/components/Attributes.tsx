@@ -6,8 +6,8 @@ import { distributeAttributes } from "../utils/distributeAttributes";
 import { useEffect, useState } from "react";
 
 type AttributesProps = {
-  race: RaceDTO;
-  classe: ClasseDTO;
+  race: RaceDTO | undefined;
+  classe: ClasseDTO | undefined;
 };
 
 export type AttributeCode = "FOR" | "DES" | "CON" | "INT" | "SAB" | "CAR";

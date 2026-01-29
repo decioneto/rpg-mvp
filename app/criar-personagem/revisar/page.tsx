@@ -8,10 +8,6 @@ import { Attributes } from "./components/Attributes";
 export default function RevisarPage() {
   const { name, race, classe, level, maxHp } = usePersonagemContext();
 
-  if (!race || !classe) {
-    return <></>;
-  }
-
   return (
     <>
       <div className="flex-4 flex items-center">
