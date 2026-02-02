@@ -12,16 +12,19 @@ type TabRacesProps = {
 };
 
 export function TabRaces({ races }: TabRacesProps) {
-  const { setRace } = usePersonagemContext();
+  const { race, setRace } = usePersonagemContext();
 
   useEffect(() => {
-    if (races) {
+    if (races && !race?.id) {
       setRace(races[0]);
     }
   }, []);
 
   return (
-    <Tabs defaultValue={races[0].id} className="flex items-center">
+    <Tabs
+      defaultValue={race ? race.id : races[0].id}
+      className="flex items-center"
+    >
       <TabsList className="bg-slate-950 gap-4">
         {races.map((item) => (
           <TabsTrigger

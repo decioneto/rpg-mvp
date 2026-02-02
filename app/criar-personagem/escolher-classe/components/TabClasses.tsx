@@ -12,10 +12,10 @@ type TabClassesProps = {
 };
 
 export function TabClasses({ classes }: TabClassesProps) {
-  const { setClasse, setMaxHp, setCurrentHp } = usePersonagemContext();
+  const { classe, setClasse, setMaxHp, setCurrentHp } = usePersonagemContext();
 
   useEffect(() => {
-    if (setClasse) {
+    if (classes && !classe) {
       setClasse(classes[0]);
       setMaxHp(classes[0].hitDie);
       setCurrentHp(classes[0].hitDie);
@@ -24,7 +24,10 @@ export function TabClasses({ classes }: TabClassesProps) {
 
   return (
     <>
-      <Tabs defaultValue={classes[0].name} className="flex items-center">
+      <Tabs
+        defaultValue={classe ? classe.name : classes[0].name}
+        className="flex items-center"
+      >
         <TabsList className="bg-slate-950 gap-4">
           {classes.map((item) => (
             <TabsTrigger

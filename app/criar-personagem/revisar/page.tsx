@@ -4,79 +4,73 @@ import { usePersonagemContext } from "@/context/PersonagemContext";
 import { Title } from "@/ui-components/Title";
 import Link from "next/link";
 import { Attributes } from "./components/Attributes";
+import { Input } from "@/ui-components/Input";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RevisarPage() {
   const { name, race, classe, level, maxHp } = usePersonagemContext();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!name || !race || !classe) {
+      router.push("nome");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
       <div className="flex-4 flex items-center">
         <div className="flex flex-col items-center justify-center gap-10">
           <Title text="Revise seu personagem" />
-
           <div className="flex flex-col w-200 gap-8">
             <div className="flex-1 flex gap-4">
-              <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="nome" className="text-yellow-500/80">
-                  Nome
-                </label>
-                <input
+              <div className="flex gap-4 w-full">
+                <Input
                   id="nome"
-                  placeholder="Escolha um nome para seu personagem"
-                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
+                  hasLabel
+                  label="Nome"
                   defaultValue={name}
                   readOnly
+                  fullsize
+                  className="flex-1"
                 />
-              </div>
-              <div className="flex flex-col gap-2 w-full min-w-10 max-w-20">
-                <label htmlFor="level" className="text-yellow-500/80">
-                  Level
-                </label>
-                <input
+                <Input
                   id="level"
-                  placeholder="Escolha um nome para seu personagem"
-                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
+                  hasLabel
+                  label="Level"
                   defaultValue={level}
                   readOnly
+                  className="min-w-20 max-w-20"
                 />
               </div>
             </div>
-            <div className="flex flex-1 gap-4">
-              <div className="flex flex-1 flex-col gap-2 w-full">
-                <label htmlFor="nome" className="text-yellow-500/80">
-                  Raça
-                </label>
-                <input
-                  id="nome"
-                  placeholder="Escolha um nome para seu personagem"
-                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
-                  defaultValue={race?.name}
-                  readOnly
-                />
-              </div>
-              <div className="flex flex-1 flex-col gap-2 w-full">
-                <label htmlFor="nome" className="text-yellow-500/80">
-                  Classe
-                </label>
-                <input
-                  id="nome"
-                  placeholder="Escolha um nome para seu personagem"
-                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
-                  defaultValue={classe?.name}
-                  readOnly
-                />
-              </div>
-              <div className="flex flex-1 flex-col gap-2 w-full min-w-10 max-w-20">
-                <label htmlFor="pv" className="text-yellow-500/80">
-                  PV
-                </label>
-                <input
-                  id="pv"
-                  className="px-6 py-3.5 bg-slate-100 outline-none rounded text-slate-900"
-                  defaultValue={maxHp}
-                  readOnly
-                />
-              </div>
+            <div className="flex gap-4 w-full">
+              <Input
+                id="raca"
+                hasLabel
+                label="Raça"
+                defaultValue={race?.name}
+                readOnly
+                fullsize
+              />
+              <Input
+                id="classe"
+                hasLabel
+                label="Classe"
+                defaultValue={classe?.name}
+                readOnly
+                fullsize
+              />
+              <Input
+                id="pv"
+                hasLabel
+                label="PV"
+                defaultValue={maxHp}
+                readOnly
+                className="min-w-20 max-w-20"
+              />
             </div>
           </div>
           <Attributes race={race} classe={classe} />
