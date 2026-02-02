@@ -7,18 +7,9 @@ export async function saveCharacter(
   level: number,
   maxHp: number,
   currentHp: number,
-  baseAttributes: Array<{ attribute: string; value: number }>,
 ): Promise<void> {
   try {
-    await saveCharacterPrisma(
-      name,
-      classeId,
-      raceId,
-      level,
-      maxHp,
-      currentHp,
-      baseAttributes,
-    );
+    await saveCharacterPrisma(name, classeId, raceId, level, maxHp, currentHp);
   } catch (error) {
     console.log(error);
   }

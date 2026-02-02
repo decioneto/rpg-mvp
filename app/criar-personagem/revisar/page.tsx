@@ -7,9 +7,12 @@ import { Attributes } from "./components/Attributes";
 import { Input } from "@/ui-components/Input";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { saveCharacter } from "@/backend/services/CharacterService";
 
 export default function RevisarPage() {
-  const { name, race, classe, level, maxHp } = usePersonagemContext();
+  const { name, race, classe, level, maxHp, currentHp } =
+    usePersonagemContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -18,6 +21,29 @@ export default function RevisarPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function handleInitGame() {
+    if (
+      !classe ||
+      !race ||
+      level == null ||
+      maxHp == null ||
+      currentHp == null
+    ) {
+      // aqui você pode mostrar um toast ou bloquear o botão
+      console.error("Dados do personagem incompletos");
+      return;
+    }
+
+    try {
+      await saveCharacter(name, classe.id, race.id, level, maxHp, currentHp);
+
+      router.push("/game-canva");
+    } catch (error) {
+      console.error("Erro ao criar personagem", error);
+      // toast / modal / feedback visual aqui
+    }
+  }
 
   return (
     <>
@@ -83,12 +109,7 @@ export default function RevisarPage() {
         >
           Editar
         </Link>
-        <Link
-          href="/game-canva"
-          className="bg-linear-to-t from-slate-800 to-slate-700 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
-        >
-          Iniciar jogo
-        </Link>
+        <Button onClick={handleInitGame}>Iniciar jogo</Button>
       </div>
     </>
   );
