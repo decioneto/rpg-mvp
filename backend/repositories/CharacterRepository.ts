@@ -21,3 +21,7 @@ export async function saveCharacter(
     },
   });
 }
+
+export async function getCharacters() {
+  await prisma.characters.findMany();
+}
