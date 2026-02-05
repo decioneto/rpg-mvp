@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { LogoutButton } from "./components/LogoutButton";
+import { Header } from "./components/Header";
 
 export default function PersonagemPage() {
   return (
-    <div>
-      <LogoutButton />
+    <div className="flex flex-col p-4">
+      <Header />
       <div className="flex flex-col h-screen items-center justify-center">
         <div className="flex-4 flex items-center">
           <p>Nenhum personagem criado</p>

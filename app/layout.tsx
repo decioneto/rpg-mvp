@@ -1,6 +1,7 @@
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { PersonagemContextProvider } from "@/context/PersonagemContext";
+import { UserContextProvider } from "@/context/UserContext";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -17,7 +18,9 @@ export default function RootLayout({
       <body
         className={`${dmSans.className} antialiased min-h-screen bg-slate-950 text-slate-50`}
       >
-        <PersonagemContextProvider>{children}</PersonagemContextProvider>
+        <UserContextProvider>
+          <PersonagemContextProvider>{children}</PersonagemContextProvider>
+        </UserContextProvider>
       </body>
     </html>
   );
