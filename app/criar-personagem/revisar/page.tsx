@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { saveCharacter } from "@/backend/services/CharacterService";
+import { supabase } from "@/lib/supabase/client";
 
 export default function RevisarPage() {
   const { name, race, classe, level, maxHp, currentHp } =
@@ -30,18 +31,30 @@ export default function RevisarPage() {
       maxHp == null ||
       currentHp == null
     ) {
-      // aqui você pode mostrar um toast ou bloquear o botão
-      console.error("Dados do personagem incompletos");
+      throw new Error("Dados do personagem incompletos");
       return;
     }
 
     try {
-      await saveCharacter(name, classe.id, race.id, level, maxHp, currentHp);
+      const { data } = await supabase.auth.getUser();
+      const user = data.user;
+      if (!user) {
+        throw new Error("Erro ao encontrar usuário");
+      }
+
+      await saveCharacter(
+        name,
+        user.id,
+        classe.id,
+        race.id,
+        level,
+        maxHp,
+        currentHp,
+      );
 
       router.push("/game-canva");
     } catch (error) {
       console.error("Erro ao criar personagem", error);
-      // toast / modal / feedback visual aqui
     }
   }
 

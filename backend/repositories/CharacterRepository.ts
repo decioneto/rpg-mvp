@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function saveCharacter(
   name: string,
+  userId: string,
   classeId: string,
   raceId: string,
   level: number,
@@ -13,6 +14,7 @@ export async function saveCharacter(
   await prisma.characters.create({
     data: {
       name,
+      user_id: userId,
       class_id: classeId,
       race_id: raceId,
       level,

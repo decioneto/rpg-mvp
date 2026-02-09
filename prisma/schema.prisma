@@ -8,6 +8,16 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Users {
+  id         String       @id @db.Uuid
+  email      String       @unique
+  name       String?
+  avatarUrl  String?
+  characters Characters[]
+
+  @@map("users")
+}
+
 model Characters {
   id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                String                @unique
@@ -15,6 +25,8 @@ model Characters {
   race                Races                 @relation(fields: [race_id], references: [id])
   class_id            String                @db.Uuid
   class               Classes               @relation(fields: [class_id], references: [id])
+  user_id             String                @db.Uuid
+  user                Users                 @relation(fields: [user_id], references: [id])
   level               Int                   @default(1)
   max_hp              Int
   current_hp          Int

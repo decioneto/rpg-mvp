@@ -2,6 +2,7 @@ import { saveCharacter as saveCharacterPrisma } from "../repositories/CharacterR
 
 export async function saveCharacter(
   name: string,
+  userId: string,
   classeId: string,
   raceId: string,
   level: number,
@@ -9,7 +10,15 @@ export async function saveCharacter(
   currentHp: number,
 ): Promise<void> {
   try {
-    await saveCharacterPrisma(name, classeId, raceId, level, maxHp, currentHp);
+    await saveCharacterPrisma(
+      name,
+      userId,
+      classeId,
+      raceId,
+      level,
+      maxHp,
+      currentHp,
+    );
   } catch (error) {
     console.log(error);
   }
