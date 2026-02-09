@@ -24,6 +24,10 @@ export async function saveCharacter(
   });
 }
 
-export async function getCharacters() {
-  await prisma.characters.findMany();
+export async function getCharacters(userId: string) {
+  await prisma.characters.findMany({
+    where: {
+      user_id: userId,
+    },
+  });
 }

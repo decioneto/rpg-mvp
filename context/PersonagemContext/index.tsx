@@ -2,7 +2,7 @@
 
 import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
 import { RaceDTO } from "@/backend/dtos/RaceDTO";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type PersonagemContextProps = {
   name: string;
@@ -52,6 +52,8 @@ export function PersonagemContextProvider({
   const [baseAttributes, setBaseAttributes] = useState<
     Array<{ attribute: string; value: number }> | undefined
   >(undefined);
+
+  useEffect(() => {}, []);
 
   const values = useMemo<PersonagemContextProps>(
     () => ({

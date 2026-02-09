@@ -12,6 +12,7 @@ export default function AuthCallback() {
     supabase.auth.getSession().then(async ({ data }) => {
       if (data.session) {
         await saveUser(data.session.user);
+        localStorage.setItem("user", JSON.stringify(data.session.user));
         router.push("/personagens");
       }
     });
