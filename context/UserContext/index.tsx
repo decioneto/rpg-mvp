@@ -29,11 +29,8 @@ export function UserContextProvider({
       console.error("Erro ao sair:", error.message);
       return;
     }
-
-    // força o middleware e server components a revalidarem
+    localStorage.clear();
     router.refresh();
-
-    // redireciona para login
     router.push("/signin");
   }
 

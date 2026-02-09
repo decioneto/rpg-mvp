@@ -1,14 +1,19 @@
 import Link from "next/link";
 import { Header } from "./components/Header";
+import { getCharacters } from "@/backend/services/CharacterService";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { CharacterList } from "./components/CharacterList";
 
-export default function PersonagemPage() {
+export default async function PersonagemPage() {
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.auth.getUser();
+  const { data: charactersData } = await getCharacters(data.user?.id);
+
   return (
     <div className="flex flex-col p-4">
       <Header />
       <div className="flex flex-col h-screen items-center justify-center">
-        <div className="flex-4 flex items-center">
-          <p>Nenhum personagem criado</p>
-        </div>
+        <CharacterList characters={charactersData} />
 
         <div className="flex-1">
           <Link

@@ -1,8 +1,8 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { ClasseData } from "../entities/Classe";
+import { Classes } from "@prisma/client";
 
-export async function fetchAllClasses(): Promise<ClasseData[]> {
-  return prisma.classes.findMany();
+export async function fetchAllClasses(): Promise<Classes[]> {
+  return await prisma.classes.findMany();
 }

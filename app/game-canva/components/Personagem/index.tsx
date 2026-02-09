@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
 import { useUserContext } from "@/context/UserContext";
+import Link from "next/link";
 
 export function Personagem() {
   const { name, level, classe, race } = usePersonagemContext();
@@ -41,7 +42,11 @@ export function Personagem() {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuGroup>
-                <DropdownMenuItem>Minha conta</DropdownMenuItem>
+                <Link href={"/personagens"}>
+                  <DropdownMenuItem className="cursor-pointer">
+                    Minha conta
+                  </DropdownMenuItem>
+                </Link>
               </DropdownMenuGroup>
               <DropdownMenuGroup>
                 <DropdownMenuSeparator />

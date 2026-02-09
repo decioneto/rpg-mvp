@@ -25,9 +25,17 @@ export async function saveCharacter(
 }
 
 export async function getCharacters(userId: string) {
-  await prisma.characters.findMany({
+  return await prisma.characters.findMany({
     where: {
       user_id: userId,
+    },
+    include: {
+      class: true,
+      race: {
+        include: {
+          races_modifier: true,
+        },
+      },
     },
   });
 }

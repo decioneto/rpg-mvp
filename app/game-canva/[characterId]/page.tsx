@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { Atributes } from "./components/Atributos";
-import { Dices } from "./components/Dices";
-import { Inventario } from "./components/Inventario";
-import { Pericias } from "./components/Periciais";
-import { Personagem } from "./components/Personagem";
+import { Atributes } from "../components/Atributos";
+import { Dices } from "../components/Dices";
+import { Inventario } from "../components/Inventario";
+import { Pericias } from "../components/Periciais";
+import { Personagem } from "../components/Personagem";
 
-export default function GameCanvaPage() {
+export default async function GameCanvaPage({
+  params,
+}: {
+  params: Promise<{ characterId: string }>;
+}) {
+  const { characterId } = await params;
+
+  console.log(characterId);
+
   return (
     <div className="p-4 flex w-full h-screen gap-4">
       <div className="flex flex-1 gap-4">
