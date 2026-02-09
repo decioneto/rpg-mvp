@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Atributes } from "../components/Atributos";
 import { Dices } from "../components/Dices";
 import { Inventario } from "../components/Inventario";
 import { Pericias } from "../components/Periciais";
 import { Personagem } from "../components/Personagem";
 import { getCharacterById } from "@/backend/services/CharacterService";
 import { notFound } from "next/navigation";
+import { Attributes } from "../components/Atributos";
 
 export default async function GameCanvaPage({
   params,
@@ -27,8 +27,10 @@ export default async function GameCanvaPage({
             classe={character.classe}
             race={character.race}
             level={character.level}
+            maxHp={character.maxHp}
+            currentHp={character.currentHp}
           />
-          <Atributes />
+          <Attributes classe={character.classe} race={character.race} />
           <Pericias />
         </div>
         <div className="flex flex-1 h-full gap-4">

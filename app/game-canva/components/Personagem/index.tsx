@@ -21,9 +21,18 @@ export type PersonagemProps = {
   race: RaceDTO;
   classe: ClasseDTO;
   level: number;
+  maxHp: number;
+  currentHp: number;
 };
 
-export function Personagem({ name, race, classe, level }: PersonagemProps) {
+export function Personagem({
+  name,
+  race,
+  classe,
+  level,
+  maxHp,
+  currentHp,
+}: PersonagemProps) {
   const { handleLogout } = useUserContext();
 
   return (
@@ -66,8 +75,8 @@ export function Personagem({ name, race, classe, level }: PersonagemProps) {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <HealthBar current={13} max={13} />
-        <span className="text-sm text-slate-500">13</span>
+        <HealthBar current={currentHp} max={maxHp} />
+        <span className="text-sm text-slate-500">{maxHp}</span>
       </div>
     </div>
   );

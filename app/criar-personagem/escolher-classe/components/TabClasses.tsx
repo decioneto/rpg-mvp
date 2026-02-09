@@ -37,7 +37,7 @@ export function TabClasses({ classes }: TabClassesProps) {
               onClick={() => {
                 setClasse(item);
                 setMaxHp(item.hitDie);
-                setMaxHp(item.hitDie);
+                setCurrentHp(item.hitDie);
               }}
             >
               {item.name}

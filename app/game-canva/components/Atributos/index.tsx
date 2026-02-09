@@ -1,40 +1,76 @@
-const ATRIBUTOS = [
-  {
-    name: "Força",
-    value: "15",
-    modifier: "+1",
-  },
-  {
-    name: "Destreza",
-    value: "14",
-    modifier: "+1",
-  },
-  {
-    name: "Constituição",
-    value: "13",
-    modifier: "+1",
-  },
-  {
-    name: "Inteligência",
-    value: "12",
-    modifier: "+1",
-  },
-  {
-    name: "Sabedoria",
-    value: "10",
-    modifier: "+1",
-  },
-  {
-    name: "Carisma",
-    value: "8",
-    modifier: "+1",
-  },
+"use client";
+
+import { distributeAttributes } from "@/app/criar-personagem/revisar/utils/distributeAttributes";
+import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
+import { RaceDTO } from "@/backend/dtos/RaceDTO";
+import { useEffect, useState } from "react";
+
+type AttributesProps = {
+  race: RaceDTO | undefined;
+  classe: ClasseDTO | undefined;
+};
+
+export type AttributeCode = "FOR" | "DES" | "CON" | "INT" | "SAB" | "CAR";
+
+export type Attribute = {
+  name: string;
+  code: AttributeCode;
+  value: number;
+  modifier: number;
+};
+
+export type AttributeValue = {
+  attribute: AttributeCode;
+  value: number;
+};
+
+const BASE_VALUES = [15, 14, 13, 12, 10, 8];
+
+const ATRIBUTOS: Omit<Attribute, "value">[] = [
+  { name: "Força", code: "FOR", modifier: 0 },
+  { name: "Destreza", code: "DES", modifier: 0 },
+  { name: "Constituição", code: "CON", modifier: 0 },
+  { name: "Inteligência", code: "INT", modifier: 0 },
+  { name: "Sabedoria", code: "SAB", modifier: 0 },
+  { name: "Carisma", code: "CAR", modifier: 0 },
 ];
 
-export function Atributes() {
+export function Attributes({ classe, race }: AttributesProps) {
+  const [attributes, setAttributes] = useState<Attribute[]>([]);
+
+  useEffect(() => {
+    if (!classe) return;
+
+    const allAttributes = ATRIBUTOS.map((a) => a.code);
+    const priorityAttributes = classe.baseAttributesCode as AttributeCode[];
+
+    const distributed = distributeAttributes(
+      allAttributes,
+      priorityAttributes,
+      BASE_VALUES,
+    );
+
+    const finalAttributes: Attribute[] = ATRIBUTOS.map((attr) => {
+      const baseValue =
+        distributed.find((d) => d.attribute === attr.code)?.value ?? 0;
+
+      const raceModifier =
+        race?.racesModifier?.find((m) => m.attribute === attr.code)?.value ?? 0;
+
+      return {
+        ...attr,
+        value: baseValue + raceModifier,
+        modifier: raceModifier,
+      };
+    });
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setAttributes(finalAttributes);
+  }, [classe, race]);
+
   return (
     <div className="w-full grid grid-cols-3 gap-4">
-      {ATRIBUTOS.map((item) => (
+      {attributes.map((item) => (
         <div
           className="bg-slate-500 aspect-square rounded relative flex items-center justify-center mb-4"
           key={item.name}
@@ -48,7 +84,7 @@ export function Atributes() {
             {item.value}
           </div>
           <div className="text-xs font-bold text-slate-900 slate-900 px-2 bg-slate-100 rounded-[2px] absolute bottom-0 left-1/2 transform translate-y-1/2 -translate-x-1/2">
-            {item.modifier}
+            {item.modifier >= 0 ? `+${item.modifier}` : -item.modifier}
           </div>
         </div>
       ))}

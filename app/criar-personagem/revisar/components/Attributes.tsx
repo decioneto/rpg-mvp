@@ -84,7 +84,7 @@ export function Attributes({ race, classe }: AttributesProps) {
           </div>
 
           <div className="text-xs font-bold text-slate-900 py-1 px-2 bg-slate-100 rounded absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2">
-            {item.modifier >= 0 ? `+${item.modifier}` : item.modifier}
+            {item.modifier >= 0 ? `+${item.modifier}` : -item.modifier}
           </div>
         </div>
       ))}
