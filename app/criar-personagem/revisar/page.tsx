@@ -42,7 +42,7 @@ export default function RevisarPage() {
         throw new Error("Erro ao encontrar usuário");
       }
 
-      await saveCharacter(
+      const characterId = await saveCharacter(
         name,
         user.id,
         classe.id,
@@ -52,7 +52,7 @@ export default function RevisarPage() {
         currentHp,
       );
 
-      router.push("/game-canva");
+      router.push(`/game-canva/${characterId}`);
     } catch (error) {
       console.error("Erro ao criar personagem", error);
     }

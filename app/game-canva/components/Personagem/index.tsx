@@ -1,6 +1,5 @@
 "use client";
 
-import { usePersonagemContext } from "@/context/PersonagemContext";
 import { HealthBar } from "../HealthBar";
 import {
   DropdownMenu,
@@ -14,9 +13,17 @@ import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
 import { useUserContext } from "@/context/UserContext";
 import Link from "next/link";
+import { RaceDTO } from "@/backend/dtos/RaceDTO";
+import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
 
-export function Personagem() {
-  const { name, level, classe, race } = usePersonagemContext();
+export type PersonagemProps = {
+  name: string;
+  race: RaceDTO;
+  classe: ClasseDTO;
+  level: number;
+};
+
+export function Personagem({ name, race, classe, level }: PersonagemProps) {
   const { handleLogout } = useUserContext();
 
   return (

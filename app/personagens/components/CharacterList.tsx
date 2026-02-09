@@ -19,7 +19,7 @@ export function CharacterList({ characters }: CharacterListProps) {
       {!characters ? (
         <p>Nenhum personagem criado</p>
       ) : (
-        <div>
+        <div className="flex gap-4">
           {characters.map((char) => (
             <div
               key={char.id}

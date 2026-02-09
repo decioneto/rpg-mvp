@@ -10,8 +10,8 @@ export async function saveCharacter(
   level: number,
   maxHp: number,
   currentHp: number,
-): Promise<void> {
-  await prisma.characters.create({
+): Promise<string> {
+  const character = await prisma.characters.create({
     data: {
       name,
       user_id: userId,
@@ -22,12 +22,30 @@ export async function saveCharacter(
       current_hp: currentHp,
     },
   });
+
+  return character.id;
 }
 
 export async function getCharacters(userId: string) {
   return await prisma.characters.findMany({
     where: {
       user_id: userId,
+    },
+    include: {
+      class: true,
+      race: {
+        include: {
+          races_modifier: true,
+        },
+      },
+    },
+  });
+}
+
+export async function getCharacterById(characterId: string) {
+  return await prisma.characters.findUnique({
+    where: {
+      id: characterId,
     },
     include: {
       class: true,

@@ -4,6 +4,8 @@ import { Dices } from "../components/Dices";
 import { Inventario } from "../components/Inventario";
 import { Pericias } from "../components/Periciais";
 import { Personagem } from "../components/Personagem";
+import { getCharacterById } from "@/backend/services/CharacterService";
+import { notFound } from "next/navigation";
 
 export default async function GameCanvaPage({
   params,
@@ -11,14 +13,21 @@ export default async function GameCanvaPage({
   params: Promise<{ characterId: string }>;
 }) {
   const { characterId } = await params;
-
-  console.log(characterId);
+  const { data: character } = await getCharacterById(characterId);
+  if (!character) {
+    notFound();
+  }
 
   return (
     <div className="p-4 flex w-full h-screen gap-4">
       <div className="flex flex-1 gap-4">
         <div className="w-full max-w-65 flex flex-col gap-4">
-          <Personagem />
+          <Personagem
+            name={character.name}
+            classe={character.classe}
+            race={character.race}
+            level={character.level}
+          />
           <Atributes />
           <Pericias />
         </div>
