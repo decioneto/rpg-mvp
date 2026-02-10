@@ -8,6 +8,13 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum ItemType {
+  WEAPON
+  ARMOR
+  CONSUMABLE
+  MISC
+}
+
 model Users {
   id         String       @id @db.Uuid
   email      String       @unique
@@ -19,18 +26,21 @@ model Users {
 }
 
 model Characters {
-  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                String                @unique
-  race_id             String                @db.Uuid
-  race                Races                 @relation(fields: [race_id], references: [id])
-  class_id            String                @db.Uuid
-  class               Classes               @relation(fields: [class_id], references: [id])
-  user_id             String                @db.Uuid
-  user                Users                 @relation(fields: [user_id], references: [id])
-  level               Int                   @default(1)
-  max_hp              Int
-  current_hp          Int
-  characterAttributes CharacterAttributes[]
+  id                   String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                 String                @unique
+  race_id              String                @db.Uuid
+  race                 Races                 @relation(fields: [race_id], references: [id])
+  class_id             String                @db.Uuid
+  class                Classes               @relation(fields: [class_id], references: [id])
+  user_id              String                @db.Uuid
+  user                 Users                 @relation(fields: [user_id], references: [id])
+  level                Int                   @default(1)
+  max_hp               Int
+  current_hp           Int
+  character_attributes CharacterAttributes[]
+  character_items      CharacterItems[]
+
+  created_at DateTime @default(now()) @db.Timestamptz(6)
 
   @@map("characters")
 }
@@ -71,11 +81,12 @@ model RacesModifier {
 }
 
 model Attributes {
-  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                String                @unique @db.VarChar
-  code                String                @unique @db.VarChar
-  created_at          DateTime              @default(now()) @db.Timestamptz(6)
-  characterAttributes CharacterAttributes[]
+  id                   String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                 String                @unique @db.VarChar
+  code                 String                @unique @db.VarChar
+  created_at           DateTime              @default(now()) @db.Timestamptz(6)
+  character_attributes CharacterAttributes[]
+  skills               Skills[]
 
   @@map("attributes")
 }
@@ -93,10 +104,68 @@ model CharacterAttributes {
   @@map("character_attributes")
 }
 
-model Skills {
-  id                String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name              String
-  related_attribute String
+model Items {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String           @unique @db.VarChar
+  type            ItemType
+  weight          Float?
+  description     String?
+  armor           Armors?
+  weapon          Weapons?
+  image_url       String?
+  character_items CharacterItems[]
+  created_at      DateTime         @default(now()) @db.Timestamptz(6)
 
-  @@map("skills")
+  @@map("items")
+}
+
+model Armors {
+  item_id          String @id @db.Uuid
+  item             Items  @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  base_armor_class Int
+  max_dex_bonus    Int? // NULL = sem limite
+
+  @@map("armors")
+}
+
+model Weapons {
+  item_id     String  @id @db.Uuid
+  item        Items   @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  damage_dice String // ex: "1d8"
+  damage_type String // slashing, piercing, bludgeoning
+  range       Int?
+  properties  String? // finesse, light, two-handed etc
+
+  @@map("weapons")
+}
+
+model CharacterItems {
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  character_id String     @db.Uuid
+  character    Characters @relation(fields: [character_id], references: [id])
+  item_id      String     @db.Uuid
+  item         Items      @relation(fields: [item_id], references: [id])
+  quantity     Int
+  equipped     Boolean
+  slot         String
+
+  @@map("character_items")
+}
+
+model Skills {
+  id           String     @id @db.Uuid
+  name         String
+  attribute_id String     @db.Uuid
+  attribute    Attributes @relation(fields: [attribute_id], references: [id])
+
+  character_skills CharacterSkills[]
+}
+
+model CharacterSkills {
+  id           String  @id @db.Uuid
+  character_id String  @db.Uuid
+  skill_id     String  @db.Uuid
+  proficient   Boolean
+  skills       Skills? @relation(fields: [skillsId], references: [id])
+  skillsId     String? @db.Uuid
 }

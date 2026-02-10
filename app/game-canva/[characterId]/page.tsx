@@ -4,7 +4,7 @@ import { Inventario } from "../components/Inventario";
 import { Pericias } from "../components/Periciais";
 import { Personagem } from "../components/Personagem";
 import { getCharacterById } from "@/backend/services/CharacterService";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { Attributes } from "../components/Atributos";
 
 export default async function GameCanvaPage({
@@ -15,7 +15,7 @@ export default async function GameCanvaPage({
   const { characterId } = await params;
   const { data: character } = await getCharacterById(characterId);
   if (!character) {
-    notFound();
+    redirect("/personagens");
   }
 
   return (
