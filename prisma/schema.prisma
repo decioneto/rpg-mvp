@@ -159,6 +159,8 @@ model Skills {
   attribute    Attributes @relation(fields: [attribute_id], references: [id])
 
   character_skills CharacterSkills[]
+
+  @@map("skills")
 }
 
 model CharacterSkills {
@@ -168,4 +170,6 @@ model CharacterSkills {
   proficient   Boolean
   skills       Skills? @relation(fields: [skillsId], references: [id])
   skillsId     String? @db.Uuid
+
+  @@map("character_skills")
 }
