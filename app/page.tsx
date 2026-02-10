@@ -1,22 +1,28 @@
-import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-export default function Home() {
-  return (
-    <div>
-      <div className="flex flex-col h-screen items-center justify-center">
-        <div className="flex-4 flex items-center">
-          <p>Nenhum personagem criado</p>
-        </div>
+export default async function Home() {
+  const cookieStore = await cookies();
 
-        <div className="flex-1">
-          <Link
-            href="criar-personagem/nome"
-            className="bg-linear-to-t from-slate-800 to-slate-700 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
-          >
-            Crie seu personagem
-          </Link>
-        </div>
-      </div>
-    </div>
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => cookieStore.getAll(),
+        setAll: () => {}, // não precisa setar nada aqui
+      },
+    },
   );
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/signin");
+  }
+
+  redirect("/personagens");
 }
