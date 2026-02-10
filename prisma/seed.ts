@@ -123,10 +123,89 @@ Mecanicamente, os elfos possuem +2 em Destreza, o que os torna excelentes arquei
   },
 ];
 
+const skillsData: Prisma.SkillsCreateInput[] = [
+  {
+    name: "Atletismo",
+    attribute: { connect: { id: "e42a9238-9534-4d16-93b4-c8e36d2058d8" } },
+  },
+  {
+    name: "Acrobacia",
+    attribute: { connect: { id: "04ef0d78-a0da-4036-84f1-1a0b8e8cf9e4" } },
+  },
+  {
+    name: "Furtividade",
+    attribute: { connect: { id: "04ef0d78-a0da-4036-84f1-1a0b8e8cf9e4" } },
+  },
+  {
+    name: "Prestidigitação",
+    attribute: { connect: { id: "04ef0d78-a0da-4036-84f1-1a0b8e8cf9e4" } },
+  },
+  {
+    name: "Arcanismo",
+    attribute: { connect: { id: "85a278b5-e1a0-4cee-810a-05b85dc1a028" } },
+  },
+  {
+    name: "História",
+    attribute: { connect: { id: "85a278b5-e1a0-4cee-810a-05b85dc1a028" } },
+  },
+  {
+    name: "Investigação",
+    attribute: { connect: { id: "85a278b5-e1a0-4cee-810a-05b85dc1a028" } },
+  },
+  {
+    name: "Natureza",
+    attribute: { connect: { id: "85a278b5-e1a0-4cee-810a-05b85dc1a028" } },
+  },
+  {
+    name: "Religião",
+    attribute: { connect: { id: "85a278b5-e1a0-4cee-810a-05b85dc1a028" } },
+  },
+  {
+    name: "Adestrar Animais",
+    attribute: { connect: { id: "d7a97f1b-70d8-4913-a676-e77980e21d8c" } },
+  },
+  {
+    name: "Intuição",
+    attribute: { connect: { id: "d7a97f1b-70d8-4913-a676-e77980e21d8c" } },
+  },
+  {
+    name: "Medicina",
+    attribute: { connect: { id: "d7a97f1b-70d8-4913-a676-e77980e21d8c" } },
+  },
+  {
+    name: "Percepção",
+    attribute: { connect: { id: "d7a97f1b-70d8-4913-a676-e77980e21d8c" } },
+  },
+  {
+    name: "Sobrevivência",
+    attribute: { connect: { id: "d7a97f1b-70d8-4913-a676-e77980e21d8c" } },
+  },
+  {
+    name: "Atuação",
+    attribute: { connect: { id: "b97b22c5-b2bb-4e3d-baec-de780d928453" } },
+  },
+  {
+    name: "Enganação",
+    attribute: { connect: { id: "b97b22c5-b2bb-4e3d-baec-de780d928453" } },
+  },
+  {
+    name: "Intimidação",
+    attribute: { connect: { id: "b97b22c5-b2bb-4e3d-baec-de780d928453" } },
+  },
+  {
+    name: "Persuasão",
+    attribute: { connect: { id: "b97b22c5-b2bb-4e3d-baec-de780d928453" } },
+  },
+];
+
 export async function main() {
-  for (const u of classesData) {
-    await prisma.classes.create({ data: u });
+  for (const u of skillsData) {
+    await prisma.skills.create({ data: u });
   }
+
+  // for (const u of classesData) {
+  //   await prisma.classes.create({ data: u });
+  // }
   // for (const r of racesData) {
   //   await prisma.races.create({ data: r });
   // }
