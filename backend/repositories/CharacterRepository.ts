@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { GramaticalGender } from "@prisma/client";
 
 export async function saveCharacter(
   name: string,
@@ -10,6 +11,7 @@ export async function saveCharacter(
   level: number,
   maxHp: number,
   currentHp: number,
+  gramaticalGender: GramaticalGender,
 ): Promise<string> {
   const character = await prisma.characters.create({
     data: {
@@ -20,6 +22,7 @@ export async function saveCharacter(
       level,
       max_hp: maxHp,
       current_hp: currentHp,
+      gramaticalGender,
     },
   });
 

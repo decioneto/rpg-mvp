@@ -12,7 +12,7 @@ import { saveCharacter } from "@/backend/services/CharacterService";
 import { supabase } from "@/lib/supabase/client";
 
 export default function RevisarPage() {
-  const { name, race, classe, level, maxHp, currentHp } =
+  const { name, race, classe, level, maxHp, currentHp, gramaticarGender } =
     usePersonagemContext();
   const router = useRouter();
 
@@ -50,6 +50,7 @@ export default function RevisarPage() {
         level,
         maxHp,
         currentHp,
+        gramaticarGender,
       );
 
       router.push(`/game-canva/${characterId}`);

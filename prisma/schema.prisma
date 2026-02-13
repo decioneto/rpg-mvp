@@ -15,6 +15,11 @@ enum ItemType {
   MISC
 }
 
+enum GramaticalGender {
+  MASCULINO
+  FEMININO
+}
+
 model Users {
   id         String       @id @db.Uuid
   email      String       @unique
@@ -37,6 +42,7 @@ model Characters {
   level                Int                   @default(1)
   max_hp               Int
   current_hp           Int
+  gramaticalGender     GramaticalGender
   character_attributes CharacterAttributes[]
   character_items      CharacterItems[]
   character_skills     CharacterSkills[]

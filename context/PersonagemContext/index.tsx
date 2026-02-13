@@ -2,6 +2,7 @@
 
 import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
 import { RaceDTO } from "@/backend/dtos/RaceDTO";
+import { GramaticalGenderEnum } from "@/enums/GramaticarGenderEnum";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type PersonagemContextProps = {
@@ -22,6 +23,10 @@ type PersonagemContextProps = {
     React.SetStateAction<
       Array<{ attribute: string; value: number }> | undefined
     >
+  >;
+  gramaticarGender: GramaticalGenderEnum;
+  setGramaticarGender: React.Dispatch<
+    React.SetStateAction<GramaticalGenderEnum>
   >;
 };
 
@@ -49,6 +54,8 @@ export function PersonagemContextProvider({
   const [level, setLevel] = useState<number>(1);
   const [maxHp, setMaxHp] = useState<number | undefined>(undefined);
   const [currentHp, setCurrentHp] = useState<number | undefined>(undefined);
+  const [gramaticarGender, setGramaticarGender] =
+    useState<GramaticalGenderEnum>("MASCULINO");
   const [baseAttributes, setBaseAttributes] = useState<
     Array<{ attribute: string; value: number }> | undefined
   >(undefined);
@@ -71,8 +78,19 @@ export function PersonagemContextProvider({
       setCurrentHp,
       baseAttributes,
       setBaseAttributes,
+      gramaticarGender,
+      setGramaticarGender,
     }),
-    [name, race, classe, level, maxHp, currentHp, baseAttributes],
+    [
+      name,
+      race,
+      classe,
+      level,
+      maxHp,
+      currentHp,
+      baseAttributes,
+      gramaticarGender,
+    ],
   );
 
   return (

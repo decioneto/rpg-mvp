@@ -3,14 +3,34 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { usePersonagemContext } from "@/context/PersonagemContext";
+import { GramaticalGenderEnum } from "@/enums/GramaticarGenderEnum";
 import { Input } from "@/ui-components/Input";
 import { Title } from "@/ui-components/Title";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function EscolherNomePage() {
-  const { name, setName } = usePersonagemContext();
+  const { name, setName, setGramaticarGender } = usePersonagemContext();
   const [error, setError] = useState("");
+
+  type GramaticalGenderRadioProps = {
+    name: string;
+    value: GramaticalGenderEnum;
+    id: string;
+  };
+
+  const GRAMATICAL_GENDER: GramaticalGenderRadioProps[] = [
+    {
+      name: "Masculino",
+      value: "MASCULINO",
+      id: "mas",
+    },
+    {
+      name: "Feminino",
+      value: "FEMININO",
+      id: "fem",
+    },
+  ];
 
   return (
     <>
@@ -31,15 +51,19 @@ export default function EscolherNomePage() {
               defaultValue={name}
               fullsize
             />
-            <RadioGroup defaultValue="feminino" className="flex ">
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="masculino" id="mas" />
-                <Label htmlFor="mas">Masculino</Label>
-              </div>
-              <div className="flex items-center gap-3">
-                <RadioGroupItem value="feminino" id="fem" />
-                <Label htmlFor="fem">Feminino</Label>
-              </div>
+            <RadioGroup
+              defaultValue="MASCULINO"
+              className="flex "
+              onValueChange={(value: GramaticalGenderEnum) =>
+                setGramaticarGender(value)
+              }
+            >
+              {GRAMATICAL_GENDER.map((gg) => (
+                <div key={gg.id} className="flex items-center gap-3">
+                  <RadioGroupItem value={gg.value} id={gg.id} />
+                  <Label htmlFor={gg.id}>{gg.name}</Label>
+                </div>
+              ))}
             </RadioGroup>
           </div>
         </div>

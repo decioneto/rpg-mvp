@@ -1,9 +1,11 @@
+import { GramaticalGenderEnum } from "@/enums/GramaticarGenderEnum";
 import { CharacterDTO } from "../dtos/CharacterDTO";
 import {
   saveCharacter as saveCharacterRepositoty,
   getCharacters as getCharactersRepositoty,
   getCharacterById as getCharacterByIdRepository,
 } from "../repositories/CharacterRepository";
+import { gramaticalGenderMapper } from "../mappers/GramaticalGenderMapper";
 
 export type FetchAllCharactersResponse = {
   data: CharacterDTO[];
@@ -21,6 +23,7 @@ export async function saveCharacter(
   level: number,
   maxHp: number,
   currentHp: number,
+  gramaticalGender: GramaticalGenderEnum,
 ): Promise<string> {
   try {
     const characterId = await saveCharacterRepositoty(
@@ -31,6 +34,7 @@ export async function saveCharacter(
       level,
       maxHp,
       currentHp,
+      gramaticalGenderMapper(gramaticalGender),
     );
 
     return characterId;
