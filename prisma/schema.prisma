@@ -161,7 +161,7 @@ model CharacterItems {
 
 model Skills {
   id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name         String
+  name         String     @unique
   attribute_id String     @db.Uuid
   attribute    Attributes @relation(fields: [attribute_id], references: [id])
 
@@ -173,9 +173,9 @@ model Skills {
 model CharacterSkills {
   id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   character_id String     @db.Uuid
-  character    Characters @relation(fields: [character_id], references: [id])
+  character    Characters @relation(fields: [character_id], references: [id], onDelete: Cascade)
   skill_id     String     @db.Uuid
-  skill        Skills     @relation(fields: [skill_id], references: [id])
+  skill        Skills     @relation(fields: [skill_id], references: [id], onDelete: Cascade)
 
   @@unique([character_id, skill_id])
   @@map("character_skills")

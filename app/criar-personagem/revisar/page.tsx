@@ -12,8 +12,16 @@ import { saveCharacter } from "@/backend/services/CharacterService";
 import { supabase } from "@/lib/supabase/client";
 
 export default function RevisarPage() {
-  const { name, race, classe, level, maxHp, currentHp, gramaticarGender } =
-    usePersonagemContext();
+  const {
+    name,
+    race,
+    classe,
+    level,
+    maxHp,
+    currentHp,
+    gramaticarGender,
+    proeficiencias,
+  } = usePersonagemContext();
   const router = useRouter();
 
   useEffect(() => {
@@ -51,6 +59,7 @@ export default function RevisarPage() {
         maxHp,
         currentHp,
         gramaticarGender,
+        proeficiencias,
       );
 
       router.push(`/game-canva/${characterId}`);

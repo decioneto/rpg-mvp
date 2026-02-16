@@ -12,7 +12,15 @@ export async function saveCharacter(
   maxHp: number,
   currentHp: number,
   gramaticalGender: GramaticalGender,
+  proeficiencias: string[],
 ): Promise<string> {
+  const skills = await prisma.skills.findMany({
+    where: {
+      name: { in: proeficiencias },
+    },
+    select: { id: true },
+  });
+
   const character = await prisma.characters.create({
     data: {
       name,
@@ -23,6 +31,13 @@ export async function saveCharacter(
       max_hp: maxHp,
       current_hp: currentHp,
       gramaticalGender,
+      character_skills: {
+        create: skills.map((skill) => ({
+          skill: {
+            connect: { id: skill.id },
+          },
+        })),
+      },
     },
   });
 

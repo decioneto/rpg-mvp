@@ -24,6 +24,7 @@ export async function saveCharacter(
   maxHp: number,
   currentHp: number,
   gramaticalGender: GramaticalGenderEnum,
+  proeficiencias: string[],
 ): Promise<string> {
   try {
     const characterId = await saveCharacterRepositoty(
@@ -35,6 +36,7 @@ export async function saveCharacter(
       maxHp,
       currentHp,
       gramaticalGenderMapper(gramaticalGender),
+      proeficiencias,
     );
 
     return characterId;

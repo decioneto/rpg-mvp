@@ -21,7 +21,16 @@ type TabClassesProps = {
 };
 
 export function TabClasses({ classes }: TabClassesProps) {
-  const { classe, setClasse, setMaxHp, setCurrentHp } = usePersonagemContext();
+  const {
+    classe,
+    setClasse,
+    setMaxHp,
+    setCurrentHp,
+    proeficiencias,
+    handleProeficienciasLimit,
+    handleClearProeficiencia,
+    removeProeficiencia,
+  } = usePersonagemContext();
 
   useEffect(() => {
     if (classes && !classe) {
@@ -36,6 +45,7 @@ export function TabClasses({ classes }: TabClassesProps) {
       <Tabs
         defaultValue={classe ? classe.name : classes[0].name}
         className="flex items-center"
+        onValueChange={() => handleClearProeficiencia()}
       >
         <TabsList className="bg-slate-950 gap-4">
           {classes.map((item) => (
@@ -53,49 +63,76 @@ export function TabClasses({ classes }: TabClassesProps) {
             </TabsTrigger>
           ))}
         </TabsList>
-        {classes.map((item) => (
-          <TabsContent value={item.name} key={item.name}>
-            <Content title={item.name}>
-              <div>
-                <div className="flex gap-8 mb-4 pb-4 border-b border-slate-600 text-sm uppercase text-slate-600 font-bold">
-                  <div className="w-full text-center">Descrição</div>
-                  <div className="w-full max-w-20 text-center">Atributo</div>
-                  <div className="w-full max-w-10 text-center">PV</div>
-                  <div className="w-full max-w-50 text-center">
-                    Escolha até 2 Perícias
+        {classes.map((item) => {
+          const limiteProeficiencia = item.name === "Ladino" ? 4 : 2;
+
+          return (
+            <TabsContent value={item.name} key={item.name}>
+              <Content title={item.name}>
+                <div>
+                  <div className="flex gap-8 mb-4 pb-4 border-b border-slate-600 text-sm uppercase text-slate-600 font-bold">
+                    <div className="w-full text-center">Descrição</div>
+                    <div className="w-full max-w-20 text-center">Atributo</div>
+                    <div className="w-full max-w-10 text-center">PV</div>
+                    <div className="w-full max-w-50 text-center">
+                      Escolha até {limiteProeficiencia} Perícias
+                    </div>
+                  </div>
+                  <div className="flex gap-8 text-center">
+                    <div className="w-full">{item.description}</div>
+                    <div className="w-full max-w-20">{item.baseAttributes}</div>
+                    <div className="w-full max-w-10">{item.hitDie}</div>
+                    <div className="w-full max-w-50 flex flex-col gap-2">
+                      {item.pericias
+                        .split(",")
+                        .map((skill) => skill.trim())
+                        .map((skill) => (
+                          <div className="flex gap-2 items-center" key={skill}>
+                            <Checkbox
+                              id={skill}
+                              name={skill}
+                              checked={proeficiencias.includes(skill)}
+                              onCheckedChange={(checked) => {
+                                if (!checked) {
+                                  removeProeficiencia(skill);
+                                } else {
+                                  if (
+                                    proeficiencias.length ===
+                                    limiteProeficiencia
+                                  ) {
+                                    return;
+                                  }
+                                  handleProeficienciasLimit(
+                                    skill,
+                                    limiteProeficiencia,
+                                  );
+                                }
+                              }}
+                            />
+                            <Label htmlFor={skill}>{skill.trim()}</Label>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div>
+                                  <InfoIcon size={18} />
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="right">
+                                <p className="max-w-40">
+                                  {skillDescription.find(
+                                    (sd) => sd.name === skill.trim(),
+                                  )?.description ?? ""}
+                                </p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </div>
+                        ))}
+                    </div>
                   </div>
                 </div>
-                <div className="flex gap-8 text-center">
-                  <div className="w-full">{item.description}</div>
-                  <div className="w-full max-w-20">{item.baseAttributes}</div>
-                  <div className="w-full max-w-10">{item.hitDie}</div>
-                  <div className="w-full max-w-50 flex flex-col gap-2">
-                    {item.pericias.split(",").map((skill) => (
-                      <div className="flex gap-2 items-center" key={skill}>
-                        <Checkbox id={skill} name={skill} />
-                        <Label htmlFor={skill}>{skill.trim()}</Label>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div>
-                              <InfoIcon size={18} />
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent side="right">
-                            <p className="max-w-40">
-                              {skillDescription.find(
-                                (sd) => sd.name === skill.trim(),
-                              )?.description ?? ""}
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Content>
-          </TabsContent>
-        ))}
+              </Content>
+            </TabsContent>
+          );
+        })}
       </Tabs>
     </>
   );

@@ -1,8 +1,8 @@
 import { fetchAllClasses } from "@/backend/services/ClasseService";
 
 import { Title } from "@/ui-components/Title";
-import Link from "next/link";
 import { TabClasses } from "./components/TabClasses";
+import { FooterButtons } from "./components/FooterButtons";
 
 export default async function EscolherClassePage() {
   const { classes } = await fetchAllClasses();
@@ -14,20 +14,7 @@ export default async function EscolherClassePage() {
           <TabClasses classes={classes} />
         </div>
       </div>
-      <div className="flex-1 flex gap-10 items-start">
-        <Link
-          href="escolher-raca"
-          className="bg-slate-950 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
-        >
-          Voltar
-        </Link>
-        <Link
-          href="revisar"
-          className="bg-linear-to-t from-slate-800 to-slate-700 text-slate-50 hover:bg-primary/90 py-3.5 px-6 rounded"
-        >
-          Avançar
-        </Link>
-      </div>
+      <FooterButtons classes={classes} />
     </>
   );
 }

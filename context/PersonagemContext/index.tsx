@@ -28,6 +28,10 @@ type PersonagemContextProps = {
   setGramaticarGender: React.Dispatch<
     React.SetStateAction<GramaticalGenderEnum>
   >;
+  proeficiencias: string[];
+  handleProeficienciasLimit(value: string, limit: number): void;
+  removeProeficiencia(skillName: string): void;
+  handleClearProeficiencia(): void;
 };
 
 export const PersonagemContext = createContext({} as PersonagemContextProps);
@@ -59,6 +63,23 @@ export function PersonagemContextProvider({
   const [baseAttributes, setBaseAttributes] = useState<
     Array<{ attribute: string; value: number }> | undefined
   >(undefined);
+  const [proeficiencias, setProeficiencias] = useState<string[]>([]);
+
+  function handleProeficienciasLimit(value: string, limit: number) {
+    setProeficiencias(() => {
+      if (proeficiencias.find((sk) => sk === value)) return proeficiencias;
+      proeficiencias.push(value);
+      return proeficiencias.splice(-limit);
+    });
+  }
+
+  function removeProeficiencia(skillName: string) {
+    setProeficiencias((prev) => prev.filter((skill) => skill !== skillName));
+  }
+
+  function handleClearProeficiencia() {
+    setProeficiencias([]);
+  }
 
   useEffect(() => {}, []);
 
@@ -80,7 +101,12 @@ export function PersonagemContextProvider({
       setBaseAttributes,
       gramaticarGender,
       setGramaticarGender,
+      proeficiencias,
+      handleProeficienciasLimit,
+      handleClearProeficiencia,
+      removeProeficiencia: removeProeficiencia,
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       name,
       race,
@@ -90,6 +116,7 @@ export function PersonagemContextProvider({
       currentHp,
       baseAttributes,
       gramaticarGender,
+      proeficiencias,
     ],
   );
 
