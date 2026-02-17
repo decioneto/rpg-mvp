@@ -21,6 +21,7 @@ export default function RevisarPage() {
     currentHp,
     gramaticarGender,
     proeficiencias,
+    attributes,
   } = usePersonagemContext();
   const router = useRouter();
 
@@ -40,7 +41,6 @@ export default function RevisarPage() {
       currentHp == null
     ) {
       throw new Error("Dados do personagem incompletos");
-      return;
     }
 
     try {
@@ -60,6 +60,7 @@ export default function RevisarPage() {
         currentHp,
         gramaticarGender,
         proeficiencias,
+        attributes,
       );
 
       router.push(`/game-canva/${characterId}`);
@@ -122,7 +123,7 @@ export default function RevisarPage() {
               />
             </div>
           </div>
-          <Attributes race={race} classe={classe} />
+          <Attributes />
         </div>
       </div>
       <div className="flex-1 flex gap-10 items-start">

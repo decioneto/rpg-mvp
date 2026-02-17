@@ -10,4 +10,7 @@ export type CharacterDTO = {
   level: number;
   maxHp: number;
   currentHp: number;
+  proeficiencias: {
+    skillId: string;
+  }[];
 };

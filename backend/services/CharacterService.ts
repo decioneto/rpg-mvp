@@ -6,6 +6,7 @@ import {
   getCharacterById as getCharacterByIdRepository,
 } from "../repositories/CharacterRepository";
 import { gramaticalGenderMapper } from "../mappers/GramaticalGenderMapper";
+import { type Attribute } from "@/context/PersonagemContext";
 
 export type FetchAllCharactersResponse = {
   data: CharacterDTO[];
@@ -25,6 +26,7 @@ export async function saveCharacter(
   currentHp: number,
   gramaticalGender: GramaticalGenderEnum,
   proeficiencias: string[],
+  characterAttributes: Attribute[],
 ): Promise<string> {
   try {
     const characterId = await saveCharacterRepositoty(
@@ -37,6 +39,7 @@ export async function saveCharacter(
       currentHp,
       gramaticalGenderMapper(gramaticalGender),
       proeficiencias,
+      characterAttributes,
     );
 
     return characterId;
@@ -75,6 +78,9 @@ export async function getCharacters(
       level: char.level,
       maxHp: char.max_hp,
       currentHp: char.current_hp,
+      proeficiencias: char.character_skills.map((skill) => ({
+        skillId: skill.skill_id,
+      })),
     }));
 
     return { data: charactersDTO };
@@ -114,6 +120,9 @@ export async function getCharacterById(
         level: char.level,
         maxHp: char.max_hp,
         currentHp: char.current_hp,
+        proeficiencias: char.character_skills.map((skill) => ({
+          skillId: skill.skill_id,
+        })),
       },
     };
   } catch (error) {

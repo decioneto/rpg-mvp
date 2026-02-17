@@ -18,12 +18,8 @@ type PersonagemContextProps = {
   setMaxHp: React.Dispatch<React.SetStateAction<number | undefined>>;
   currentHp?: number;
   setCurrentHp: React.Dispatch<React.SetStateAction<number | undefined>>;
-  baseAttributes: Array<{ attribute: string; value: number }> | undefined;
-  setBaseAttributes: React.Dispatch<
-    React.SetStateAction<
-      Array<{ attribute: string; value: number }> | undefined
-    >
-  >;
+  attributes: Attribute[];
+  setAttributes: React.Dispatch<React.SetStateAction<Attribute[]>>;
   gramaticarGender: GramaticalGenderEnum;
   setGramaticarGender: React.Dispatch<
     React.SetStateAction<GramaticalGenderEnum>
@@ -32,6 +28,15 @@ type PersonagemContextProps = {
   handleProeficienciasLimit(value: string, limit: number): void;
   removeProeficiencia(skillName: string): void;
   handleClearProeficiencia(): void;
+};
+
+export type AttributeCode = "FOR" | "DES" | "CON" | "INT" | "SAB" | "CAR";
+
+export type Attribute = {
+  name: string;
+  code: AttributeCode;
+  value: number;
+  modifier: number;
 };
 
 export const PersonagemContext = createContext({} as PersonagemContextProps);
@@ -60,10 +65,8 @@ export function PersonagemContextProvider({
   const [currentHp, setCurrentHp] = useState<number | undefined>(undefined);
   const [gramaticarGender, setGramaticarGender] =
     useState<GramaticalGenderEnum>("MASCULINO");
-  const [baseAttributes, setBaseAttributes] = useState<
-    Array<{ attribute: string; value: number }> | undefined
-  >(undefined);
   const [proeficiencias, setProeficiencias] = useState<string[]>([]);
+  const [attributes, setAttributes] = useState<Attribute[]>([]);
 
   function handleProeficienciasLimit(value: string, limit: number) {
     setProeficiencias(() => {
@@ -97,9 +100,9 @@ export function PersonagemContextProvider({
       setMaxHp,
       currentHp,
       setCurrentHp,
-      baseAttributes,
-      setBaseAttributes,
       gramaticarGender,
+      attributes,
+      setAttributes,
       setGramaticarGender,
       proeficiencias,
       handleProeficienciasLimit,
@@ -114,7 +117,7 @@ export function PersonagemContextProvider({
       level,
       maxHp,
       currentHp,
-      baseAttributes,
+      attributes,
       gramaticarGender,
       proeficiencias,
     ],

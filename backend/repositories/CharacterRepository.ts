@@ -1,5 +1,6 @@
 "use server";
 
+import { type Attribute } from "@/context/PersonagemContext";
 import { prisma } from "@/lib/prisma";
 import { GramaticalGender } from "@prisma/client";
 
@@ -13,6 +14,7 @@ export async function saveCharacter(
   currentHp: number,
   gramaticalGender: GramaticalGender,
   proeficiencias: string[],
+  characterAttributes: Attribute[],
 ): Promise<string> {
   const skills = await prisma.skills.findMany({
     where: {
@@ -38,6 +40,15 @@ export async function saveCharacter(
           },
         })),
       },
+      character_attributes: {
+        create: characterAttributes.map((attr) => ({
+          attribute: {
+            connect: { code: attr.code },
+          },
+          base_value: attr.value,
+          modifier: attr.modifier,
+        })),
+      },
     },
   });
 
@@ -56,6 +67,7 @@ export async function getCharacters(userId: string) {
           races_modifier: true,
         },
       },
+      character_skills: true,
     },
   });
 }
@@ -72,6 +84,7 @@ export async function getCharacterById(characterId: string) {
           races_modifier: true,
         },
       },
+      character_skills: true,
     },
   });
 }

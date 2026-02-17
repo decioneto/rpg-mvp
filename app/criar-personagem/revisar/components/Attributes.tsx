@@ -1,14 +1,8 @@
 "use client";
 
-import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
-import { RaceDTO } from "@/backend/dtos/RaceDTO";
 import { distributeAttributes } from "../utils/distributeAttributes";
-import { useEffect, useState } from "react";
-
-type AttributesProps = {
-  race: RaceDTO | undefined;
-  classe: ClasseDTO | undefined;
-};
+import { useEffect } from "react";
+import { usePersonagemContext } from "@/context/PersonagemContext";
 
 export type AttributeCode = "FOR" | "DES" | "CON" | "INT" | "SAB" | "CAR";
 
@@ -26,17 +20,17 @@ export type AttributeValue = {
 
 const BASE_VALUES = [15, 14, 13, 12, 10, 8];
 
-const ATRIBUTOS: Omit<Attribute, "value">[] = [
-  { name: "Força", code: "FOR", modifier: 0 },
-  { name: "Destreza", code: "DES", modifier: 0 },
-  { name: "Constituição", code: "CON", modifier: 0 },
-  { name: "Inteligência", code: "INT", modifier: 0 },
-  { name: "Sabedoria", code: "SAB", modifier: 0 },
-  { name: "Carisma", code: "CAR", modifier: 0 },
-];
+export function Attributes() {
+  const { attributes, setAttributes, race, classe } = usePersonagemContext();
 
-export function Attributes({ race, classe }: AttributesProps) {
-  const [attributes, setAttributes] = useState<Attribute[]>([]);
+  const ATRIBUTOS: Omit<Attribute, "value">[] = [
+    { name: "Força", code: "FOR", modifier: 0 },
+    { name: "Destreza", code: "DES", modifier: 0 },
+    { name: "Constituição", code: "CON", modifier: 0 },
+    { name: "Inteligência", code: "INT", modifier: 0 },
+    { name: "Sabedoria", code: "SAB", modifier: 0 },
+    { name: "Carisma", code: "CAR", modifier: 0 },
+  ];
 
   useEffect(() => {
     if (!classe) return;
@@ -59,13 +53,13 @@ export function Attributes({ race, classe }: AttributesProps) {
 
       return {
         ...attr,
-        value: baseValue + raceModifier,
+        value: baseValue,
         modifier: raceModifier,
       };
     });
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setAttributes(finalAttributes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classe, race]);
 
   return (
@@ -80,7 +74,9 @@ export function Attributes({ race, classe }: AttributesProps) {
           </div>
 
           <div className="text-slate-100 font-bold text-[52px]">
-            {item.value}
+            {item.modifier >= 0
+              ? item.value + item.modifier
+              : item.value - item.modifier}
           </div>
 
           <div className="text-xs font-bold text-slate-900 py-1 px-2 bg-slate-100 rounded absolute bottom-0 left-1/2 translate-y-1/2 -translate-x-1/2">
