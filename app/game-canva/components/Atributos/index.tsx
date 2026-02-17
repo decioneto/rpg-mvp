@@ -1,73 +1,12 @@
 "use client";
 
-import { distributeAttributes } from "@/app/criar-personagem/revisar/utils/distributeAttributes";
-import { ClasseDTO } from "@/backend/dtos/ClasseDTO";
-import { RaceDTO } from "@/backend/dtos/RaceDTO";
-import { useEffect, useState } from "react";
+import { Attribute } from "@/context/PersonagemContext";
 
 type AttributesProps = {
-  race: RaceDTO | undefined;
-  classe: ClasseDTO | undefined;
+  attributes: Attribute[];
 };
 
-export type AttributeCode = "FOR" | "DES" | "CON" | "INT" | "SAB" | "CAR";
-
-export type Attribute = {
-  name: string;
-  code: AttributeCode;
-  value: number;
-  modifier: number;
-};
-
-export type AttributeValue = {
-  attribute: AttributeCode;
-  value: number;
-};
-
-const BASE_VALUES = [15, 14, 13, 12, 10, 8];
-
-const ATRIBUTOS: Omit<Attribute, "value">[] = [
-  { name: "Força", code: "FOR", modifier: 0 },
-  { name: "Destreza", code: "DES", modifier: 0 },
-  { name: "Constituição", code: "CON", modifier: 0 },
-  { name: "Inteligência", code: "INT", modifier: 0 },
-  { name: "Sabedoria", code: "SAB", modifier: 0 },
-  { name: "Carisma", code: "CAR", modifier: 0 },
-];
-
-export function Attributes({ classe, race }: AttributesProps) {
-  const [attributes, setAttributes] = useState<Attribute[]>([]);
-
-  useEffect(() => {
-    if (!classe) return;
-
-    const allAttributes = ATRIBUTOS.map((a) => a.code);
-    const priorityAttributes = classe.baseAttributesCode as AttributeCode[];
-
-    const distributed = distributeAttributes(
-      allAttributes,
-      priorityAttributes,
-      BASE_VALUES,
-    );
-
-    const finalAttributes: Attribute[] = ATRIBUTOS.map((attr) => {
-      const baseValue =
-        distributed.find((d) => d.attribute === attr.code)?.value ?? 0;
-
-      const raceModifier =
-        race?.racesModifier?.find((m) => m.attribute === attr.code)?.value ?? 0;
-
-      return {
-        ...attr,
-        value: baseValue + raceModifier,
-        modifier: raceModifier,
-      };
-    });
-
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setAttributes(finalAttributes);
-  }, [classe, race]);
-
+export function Attributes({ attributes }: AttributesProps) {
   return (
     <div className="w-full grid grid-cols-3 gap-4">
       {attributes.map((item) => (
@@ -76,9 +15,7 @@ export function Attributes({ classe, race }: AttributesProps) {
           key={item.name}
         >
           <div className="text-[10px] font-black text-slate-900 w-6 h-6 bg-slate-100 rounded-[2px] absolute top-0 left-1/2 transform -translate-1/2 flex items-center justify-center rotate-45">
-            <div className="transform -rotate-45">
-              {item.name.slice(0, 3).toUpperCase()}
-            </div>
+            <div className="transform -rotate-45">{item.code}</div>
           </div>
           <div className="text-slate-100 font-bold text-2xl flex items-center justify-center">
             {item.value}

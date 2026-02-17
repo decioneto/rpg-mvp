@@ -101,7 +101,7 @@ model Attributes {
 model CharacterAttributes {
   id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   character_id String     @db.Uuid
-  character    Characters @relation(fields: [character_id], references: [id], map: "fk_character_attributes_character")
+  character    Characters @relation(fields: [character_id], references: [id], map: "fk_character_attributes_character", onDelete: Cascade)
   attribute_id String     @db.Uuid
   attribute    Attributes @relation(fields: [attribute_id], references: [id], map: "fk_character_attributes_attribute")
   base_value   Int
@@ -149,7 +149,7 @@ model Weapons {
 model CharacterItems {
   id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   character_id String     @db.Uuid
-  character    Characters @relation(fields: [character_id], references: [id])
+  character    Characters @relation(fields: [character_id], references: [id], onDelete: Cascade)
   item_id      String     @db.Uuid
   item         Items      @relation(fields: [item_id], references: [id])
   quantity     Int
@@ -175,7 +175,7 @@ model CharacterSkills {
   character_id String     @db.Uuid
   character    Characters @relation(fields: [character_id], references: [id], onDelete: Cascade)
   skill_id     String     @db.Uuid
-  skill        Skills     @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+  skill        Skills     @relation(fields: [skill_id], references: [id])
 
   @@unique([character_id, skill_id])
   @@map("character_skills")

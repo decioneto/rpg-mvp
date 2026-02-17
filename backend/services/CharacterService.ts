@@ -6,7 +6,7 @@ import {
   getCharacterById as getCharacterByIdRepository,
 } from "../repositories/CharacterRepository";
 import { gramaticalGenderMapper } from "../mappers/GramaticalGenderMapper";
-import { type Attribute } from "@/context/PersonagemContext";
+import { AttributeCode, type Attribute } from "@/context/PersonagemContext";
 
 export type FetchAllCharactersResponse = {
   data: CharacterDTO[];
@@ -81,6 +81,12 @@ export async function getCharacters(
       proeficiencias: char.character_skills.map((skill) => ({
         skillId: skill.skill_id,
       })),
+      characterAttributes: char.character_attributes.map((attr) => ({
+        name: attr.attribute.name,
+        code: attr.attribute.code as AttributeCode,
+        value: attr.base_value,
+        modifier: attr.modifier,
+      })),
     }));
 
     return { data: charactersDTO };
@@ -122,6 +128,12 @@ export async function getCharacterById(
         currentHp: char.current_hp,
         proeficiencias: char.character_skills.map((skill) => ({
           skillId: skill.skill_id,
+        })),
+        characterAttributes: char.character_attributes.map((attr) => ({
+          name: attr.attribute.name,
+          code: attr.attribute.code as AttributeCode,
+          value: attr.base_value,
+          modifier: attr.modifier,
         })),
       },
     };

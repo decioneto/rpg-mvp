@@ -1,5 +1,6 @@
-import { ClasseDTO } from "./ClasseDTO";
-import { RaceDTO } from "./RaceDTO";
+import { type Attribute } from "@/context/PersonagemContext";
+import { type ClasseDTO } from "./ClasseDTO";
+import { type RaceDTO } from "./RaceDTO";
 
 export type CharacterDTO = {
   id: string;
@@ -13,4 +14,5 @@ export type CharacterDTO = {
   proeficiencias: {
     skillId: string;
   }[];
+  characterAttributes: Attribute[];
 };

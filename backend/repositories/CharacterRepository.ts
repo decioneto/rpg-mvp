@@ -68,6 +68,13 @@ export async function getCharacters(userId: string) {
         },
       },
       character_skills: true,
+      character_attributes: {
+        select: {
+          attribute: true,
+          base_value: true,
+          modifier: true,
+        },
+      },
     },
   });
 }
@@ -85,6 +92,13 @@ export async function getCharacterById(characterId: string) {
         },
       },
       character_skills: true,
+      character_attributes: {
+        select: {
+          attribute: true,
+          base_value: true,
+          modifier: true,
+        },
+      },
     },
   });
 }

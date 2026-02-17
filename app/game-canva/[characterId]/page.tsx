@@ -30,7 +30,7 @@ export default async function GameCanvaPage({
             maxHp={character.maxHp}
             currentHp={character.currentHp}
           />
-          <Attributes classe={character.classe} race={character.race} />
+          <Attributes attributes={character.characterAttributes} />
           <Pericias />
         </div>
         <div className="flex flex-1 h-full gap-4">
